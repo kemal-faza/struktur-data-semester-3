@@ -1,0 +1,252 @@
+#ifndef matriks.c
+#define matriks .c
+
+/* Program   : matriks.c */
+/* Deskripsi : file BODY modul matriks integer */
+/* NIM/Nama  : 24060124120013/Muhamad Kemal Faza */
+/* Tanggal   : 18-09-2025 */
+/***********************************/
+
+#include <stdio.h>
+/* include matriks.h & boolean.h */
+#include "matriks.h"
+
+/* KONSTRUKTOR */
+/* procedure initMatriks(output M: Matriks)
+    {I.S.: - }
+    {F.S.: Matriks M terdefinisi}
+    {Proses mengisi elemen cell dengan -999, nbaris 0, nkolom 0} */
+void initMatriks(Matriks *M)
+{
+    // kamus lokal
+    int i, j;
+
+    // algoritma
+    for (i = 1; i < sizeof(*M).cell; i++)
+    {
+        for (j = 1; j < sizeof(*M).cell[i]; j++)
+        {
+            (*M).cell[i][j] = -999;
+        }
+    }
+
+    (*M).nbaris = 0;
+    (*M).nkolom = 0;
+}
+
+/* SELEKTOR */
+/* function getNBaris(M: Matriks) -> integer
+    {mengembalikan banyak baris matriks M yang terisi } */
+int getNBaris(Matriks M)
+{
+    // kamus lokal
+
+    // algoritma
+    return M.nbaris;
+}
+
+/* function getNKolom(M: Matriks) -> integer
+    {mengembalikan banyak kolom matriks M yang terisi } */
+int getNKolom(Matriks M)
+{
+    // kamus lokal
+
+    // algoritma
+    return M.nkolom;
+}
+
+/* PREDIKAT */
+/* function isEmptyMatriks(M: Matriks) -> boolean
+    {mengembalikan True jika matriks M kosong } */
+boolean isEmptyMatriks(Matriks M)
+{
+    // kamus lokal
+
+    // algoritma
+    return getNBaris(M) == 0 && getNKolom(M) == 0;
+}
+
+/* function isFullMatriks(M: Matriks) -> boolean
+    {mengembalikan True jika matriks M penuh } */
+boolean isFullMatriks(Matriks M)
+{
+    // kamus lokal
+
+    // algoritma
+    return getNBaris(M) == sizeof M.cell && getNKolom(M) == sizeof M.cell[1];
+}
+
+/* MUTATOR */
+/* procedure addX (input/output M:Matriks, input X:integer, row:integer, col:integer)
+    {I.S.: M terdefinisi, X terdefinisi }
+    {F.S.: isi M.cell bertambah 1 elemen pada baris ke-row dan kolom ke-col jika belum penuh}
+    {Proses: mengisi elemen M.cell dengan nilai X} */
+void addX(Matriks *M, int X, int row, int col)
+{
+    // kamus lokal
+
+    // algoritma
+    if ((*M).cell[row][col] == -999)
+    {
+        (*M).cell[row][col] = X;
+    }
+
+    if ((*M).nbaris < row)
+    {
+        (*M).nbaris = row;
+    }
+
+    if ((*M).nkolom < col)
+    {
+        (*M).nkolom = col;
+    }
+}
+
+/* procedure delX (input/output M:Matriks, input X:integer )
+    {I.S.: M terdefinisi, X terdefinisi}
+    {F.S.: elemen M.cell berkurang 1}
+    {Proses: menghapus 1 elemen bernilai X dari M.cell*/
+void delX(Matriks *M, int X)
+{
+    // kamus lokal
+    int row, col;
+
+    // algoritma
+    row = 0;
+    col = 0;
+    searchX(*M, X, row, col);
+
+    if (row != 0 && col != 0)
+    {
+        (*M).cell[row][col] = -999;
+        if ((*M).nbaris)
+    }
+}
+
+/* procedure isiMatriksRandom(input/output M: Matriks, input x: integer, input y: integer)
+    {I.S.: M terdefinisi}
+    {F.S.: M terisi dengan bilangan random sejumlah x baris dan y kolom, nbaris=x, nkolom=y}
+    {proses: mengisi matriks dengan bilangan integer random dengan jumlah baris x dan kolom y} */
+void isiMatriksRandom(Matriks *M, int x, int y);
+
+/* procedure isiMatriksIdentitas(input/output M: Matriks, input n: integer)
+    {I.S.: M terdefinisi}
+    {F.S.: M terisi dengan matriks identitas berukuran n x n, nbaris=nkolom=n}
+    {proses: mengisi matriks dengan matriks identitas berukuran n x n} */
+void isiMatriksIdentitas(Matriks *M, int n);
+
+/* OPERASI BACA/TULIS */
+/* procedure populateMatriks(input/output M: Matriks, input x: integer, input y: integer)
+{I.S.: M terdefinisi}
+{F.S.: M terisi dengan inputan dari keybord sejumlah x baris dan y kolom, nbaris=x, nkolom=y}
+{proses: mengisi matriks dengan meminta inputan dari keyboard dengan jumlah baris x dan kolom y} */
+void populateMatriks(Matriks *M, int x, int y);
+
+/* procedure printMatriks(input M:Matriks)
+    {I.S.: M terdefinisi}
+    {F.S.: -}
+    {Proses: menampilkan semua elemen M.cell ke layar} */
+void printMatriks(Matriks M);
+
+/* procedure viewMatriks (input M:Matriks)
+    {I.S.: M terdefinisi}
+    {F.S.: -}
+    {Proses: menampilkan elemen M.cell yang terisi ke layar} */
+void viewMatriks(Matriks M);
+
+/* OPERASI ARITMATIKA */
+/* function addMatriks(M1,M2: Matriks) -> Matriks
+{mengembalikan hasil penjumlahan matriks M1 dengan M2} */
+Matriks addMatriks(Matriks M1, Matriks M2);
+
+/* function subMatriks(M1,M2: Matriks) -> Matriks
+{mengembalikan hasil pengurangan antara matriks M1 dengan M2} */
+Matriks subMatriks(Matriks M1, Matriks M2);
+
+/* function kaliMatriks(M1,M2: Matriks) -> Matriks
+{mengembalikan hasil perkalian antara matriks M1 dengan M2} */
+Matriks kaliMatriks(Matriks M1, Matriks M2);
+
+/* function kaliSkalarMatriks(M: Matriks, x: integer) -> Matriks
+{mengembalikan perkalian antara matriks M dengan nilai skalar x} */
+Matriks kaliSkalarMatriks(Matriks M1, int x);
+
+/* OPERASI LAINNYA */
+/* procedure transposeMatriks(input/output M: Matriks)
+    {I.S.: M terdefinisi}
+    {F.S.: Matriks M sudah ditukar susunan baris dan kolomnya (Transpose)}
+    {proses: mengubah susunan cell matriks, M.cell[i,j] menjadi M.cell[j,i]} */
+void transposeMatriks(Matriks *M);
+
+/* function getTransposeMatriks(M: Matriks)
+    {menghasilkan sebuah matriks yang merupakan hasil transpose dari matriks M} */
+Matriks getTransposeMatriks(Matriks M);
+
+/* function addPadding(M: Matriks, input n:integer)
+    {menghasilkan matriks baru dari M yang ditambahkan padding 0 sesuai dengan ukuran padding n */
+Matriks addPadding(Matriks M, int n);
+
+/* function maxPooling(M: Matriks, input size:integer)
+    {menghasilkan matriks hasil max pooling matriks M dengan pool size = size  */
+Matriks maxPooling(Matriks M, int size);
+
+/* function avgPooling(M: Matriks, input size:integer)
+    {menghasilkan matriks hasil average pooling matriks M dengan pool size = size  */
+Matriks avgPooling(Matriks M, int size);
+
+/* function conv(M: Matriks, K:Matriks)
+    {menghasilkan matriks hasil konvolusi matriks M dengan kernel K  */
+Matriks conv(Matriks M, Matriks K);
+
+/* OPERASI PENCARIAN*/
+/* procedure searchX( input M:Matriks, input X: integer, output row: integer, output col: integer )
+    {I.S.: M terdefinisi, X terdefinisi }
+    {F.S.: row berisi indeks baris dan col berisi indeks kolom ketemu X di M.cell, atau -999 jika tidak ketemu}
+    {Proses: mencari elemen bernilai X dalam M.cell} */
+void searchX(Matriks M, int X, int *row, int *col)
+{
+    // kamus lokal
+    int i, j;
+    boolean found;
+
+    // algoritma
+    while (i < sizeof M.cell && !found)
+    {
+        while (j < sizeof M.cell[i] && !found)
+        {
+            if (M.cell[i][j] == X)
+            {
+                found = true;
+                row = i;
+                col = j;
+            }
+            j++;
+        }
+        i++;
+    }
+}
+
+/* function countX (M:Matriks, X: integer) -> integer
+    {mengembalikan banyaknya elemen bernilai X dalam M.cell} */
+int countX(Matriks M, int X)
+{
+    // kamus lokal
+    int i, j, count;
+
+    // algoritma
+    count = 0;
+    for (i = 1; i < sizeof M.cell; i++)
+    {
+        for (j = 1; j < sizeof M.cell[i]; j++)
+        {
+            if (M.cell[i][j] == X)
+            {
+                count++;
+            }
+        }
+    }
+
+    return count;
+}
+
+#endif
