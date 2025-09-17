@@ -156,7 +156,7 @@ void isiMatriksRandom(Matriks *M, int x, int y)
     {
         for (j = 1; j <= y; j++)
         {
-            randInt = rand() % 100;
+            randInt = rand() % 10 + 1;
             addX(&(*M), randInt, i, j);
         }
     }
@@ -234,7 +234,7 @@ void printMatriks(Matriks M)
         for (j = 1; j <= KMAX; j++)
         {
             currCell = M.cell[i][j];
-            j == KMAX - 1 ? printf("%d\n", currCell) : printf("%d | ", currCell);
+            j == KMAX ? printf("%d\n", currCell) : printf("%d | ", currCell);
         }
     }
 }
@@ -317,34 +317,190 @@ Matriks subMatriks(Matriks M1, Matriks M2)
 {mengembalikan hasil perkalian antara matriks M1 dengan M2} */
 Matriks kaliMatriks(Matriks M1, Matriks M2)
 {
+    // kamus lokal
+    int i, j, k, tempHasil;
+    Matriks MHasil;
+
+    // algoritma
+    initMatriks(&MHasil);
+    if (getNKolom(M1) == getNBaris(M2))
+    {
+        for (i = 1; i <= getNBaris(M1); i++)
+        {
+            for (j = 1; j <= getNKolom(M2); j++)
+            {
+                tempHasil = 0;
+                for (k = 1; k <= getNKolom(M1); k++)
+                {
+                    tempHasil += M1.cell[i][k] * M2.cell[k][j];
+                }
+                addX(&MHasil, tempHasil, i, j);
+            }
+        }
+    }
+
+    MHasil.nbaris = i;
+    MHasil.nkolom = j;
+
+    return MHasil;
 }
 
 /* function kaliSkalarMatriks(M: Matriks, x: integer) -> Matriks
 {mengembalikan perkalian antara matriks M dengan nilai skalar x} */
-Matriks kaliSkalarMatriks(Matriks M1, int x);
+Matriks kaliSkalarMatriks(Matriks M1, int x)
+{
+    // kamus lokal
+    int i, j;
+    Matriks MHasil;
+
+    // algoritma
+    initMatriks(&MHasil);
+    for (i = 1; i <= getNBaris(M1); i++)
+    {
+        for (j = 1; j <= getNKolom(M1); j++)
+        {
+            if (M1.cell[i][j] != -999)
+            {
+                addX(&MHasil, M1.cell[i][j] * x, i, j);
+            }
+        }
+    }
+
+    return MHasil;
+}
 
 /* OPERASI LAINNYA */
 /* procedure transposeMatriks(input/output M: Matriks)
     {I.S.: M terdefinisi}
     {F.S.: Matriks M sudah ditukar susunan baris dan kolomnya (Transpose)}
     {proses: mengubah susunan cell matriks, M.cell[i,j] menjadi M.cell[j,i]} */
-void transposeMatriks(Matriks *M);
+void transposeMatriks(Matriks *M)
+{
+    *M = getTransposeMatriks(*M);
+}
 
 /* function getTransposeMatriks(M: Matriks)
     {menghasilkan sebuah matriks yang merupakan hasil transpose dari matriks M} */
-Matriks getTransposeMatriks(Matriks M);
+Matriks getTransposeMatriks(Matriks M)
+{
+    // kamus lokal
+    int i, j;
+    Matriks MHasil;
+
+    // algoritma
+    initMatriks(&MHasil);
+    for (i = 1; i <= getNBaris(M); i++)
+    {
+        for (j = 1; j <= getNKolom(M); j++)
+        {
+            addX(&MHasil, M.cell[i][j], j, i);
+        }
+    }
+
+    return MHasil;
+}
 
 /* function addPadding(M: Matriks, input n:integer)
     {menghasilkan matriks baru dari M yang ditambahkan padding 0 sesuai dengan ukuran padding n */
-Matriks addPadding(Matriks M, int n);
+Matriks addPadding(Matriks M, int n)
+{
+    // kamus lokal
+    int i, j, newRow, newCol;
+    Matriks Mhasil;
+
+    // algoritma
+    initMatriks(&Mhasil);
+    newRow = 2 * n + getNBaris(M);
+    newCol = 2 * n + getNKolom(M);
+    for (i = 1; i <= newRow; i++)
+    {
+        for (j = 1; j <= newCol; j++)
+        {
+            if (i > n && i <= getNBaris(M) + n && j > n && j <= getNKolom(M) + n)
+            {
+                addX(&Mhasil, M.cell[i - n][j - n], i, j);
+            }
+            else
+            {
+                addX(&Mhasil, 0, i, j);
+            }
+        }
+    }
+    return Mhasil;
+}
 
 /* function maxPooling(M: Matriks, input size:integer)
     {menghasilkan matriks hasil max pooling matriks M dengan pool size = size  */
-Matriks maxPooling(Matriks M, int size);
+Matriks maxPooling(Matriks M, int size)
+{
+    // kamus lokal
+    int i, j, k, l, max, temp, row, col;
+    Matriks MHasil;
+
+    // algoritma
+    initMatriks(&MHasil);
+    if (getNBaris(M) % size == 0 && getNKolom(M) % size == 0)
+    {
+        for (i = 1; i <= getNBaris(M); i = i + size)
+        {
+            for (j = 1; j <= getNKolom(M); j = j + size)
+            {
+                max = 0;
+                for (k = i; k < i + size; k++)
+                {
+                    for (l = j; l < j + size; l++)
+                    {
+                        temp = M.cell[k][l];
+                        if (temp > max)
+                        {
+                            max = temp;
+                        }
+                    }
+                }
+                row = size % 2 == 0 ? i / size + 1 : i / size;
+                col = size % 2 == 0 ? j / size + 1 : j / size;
+                addX(&MHasil, max, row, col);
+            }
+        }
+    }
+
+    return MHasil;
+}
 
 /* function avgPooling(M: Matriks, input size:integer)
     {menghasilkan matriks hasil average pooling matriks M dengan pool size = size  */
-Matriks avgPooling(Matriks M, int size);
+Matriks avgPooling(Matriks M, int size)
+{
+    // kamus lokal
+    int i, j, k, l, avg, sum, row, col;
+    Matriks MHasil;
+
+    // algoritma
+    initMatriks(&MHasil);
+    if (getNBaris(M) % size == 0 && getNKolom(M) % size == 0)
+    {
+        for (i = 1; i <= getNBaris(M); i = i + size)
+        {
+            for (j = 1; j <= getNKolom(M); j = j + size)
+            {
+                sum = 0;
+                for (k = i; k < i + size; k++)
+                {
+                    for (l = j; l < j + size; l++)
+                    {
+                        sum += M.cell[k][l];
+                    }
+                }
+                avg = sum / (size * size);
+                row = size % 2 == 0 ? i / size + 1 : i / size;
+                col = size % 2 == 0 ? j / size + 1 : j / size;
+                addX(&MHasil, avg, row, col);
+            }
+        }
+    }
+
+    return MHasil;
+}
 
 /* function conv(M: Matriks, K:Matriks)
     {menghasilkan matriks hasil konvolusi matriks M dengan kernel K  */
@@ -362,9 +518,9 @@ void searchX(Matriks M, int X, int *row, int *col)
     boolean found;
 
     // algoritma
-    while (i < BMAX && !found)
+    while (i <= BMAX && !found)
     {
-        while (j < KMAX && !found)
+        while (j <= KMAX && !found)
         {
             if (M.cell[i][j] == X)
             {
@@ -387,9 +543,9 @@ int countX(Matriks M, int X)
 
     // algoritma
     count = 0;
-    for (i = 1; i < BMAX; i++)
+    for (i = 1; i <= BMAX; i++)
     {
-        for (j = 1; j < KMAX; j++)
+        for (j = 1; j <= KMAX; j++)
         {
             if (M.cell[i][j] == X)
             {

@@ -10,12 +10,20 @@
 int main()
 {
 	/*kamus*/
-	Matriks M1;
+	Matriks M1, M2;
 
 	/*algoritma*/
 	initMatriks(&M1);
-	populateMatriks(&M1, 4, 2);
+	initMatriks(&M2);
+	isiMatriksRandom(&M1, 6, 6);
+	isiMatriksRandom(&M2, 3, 7);
 	printMatriks(M1);
+	// printMatriks(addPadding(M1, 3));
+	// kaliMatriks(M1, M2);
+	// addPadding(M1, 2);
+	// printMatriks(maxPooling(M1, 2));
+	printMatriks(avgPooling(M1, 2));
+	// maxPooling(M1, 2);
 
 	return 0;
 }
