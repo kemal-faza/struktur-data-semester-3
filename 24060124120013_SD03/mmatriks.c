@@ -5,12 +5,17 @@
 /***********************************/
 
 #include <stdio.h>
+#include "matriks.h"
 
 int main()
 {
 	/*kamus*/
+	Matriks M1;
 
 	/*algoritma*/
+	initMatriks(&M1);
+	populateMatriks(&M1, 4, 2);
+	printMatriks(M1);
 
 	return 0;
 }

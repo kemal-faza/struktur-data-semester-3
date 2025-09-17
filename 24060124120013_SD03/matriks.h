@@ -20,6 +20,10 @@ typedef struct
 	int nkolom;
 } Matriks;
 
+// KONSTANTA
+#define BMAX 10
+#define KMAX 10
+
 /* KONSTRUKTOR */
 /* procedure initMatriks(output M: Matriks)
 	{I.S.: - }

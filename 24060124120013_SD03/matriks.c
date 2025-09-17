@@ -1,5 +1,5 @@
-#ifndef matriks.c
-#define matriks .c
+#ifndef matriks_c
+#define matriks_c
 
 /* Program   : matriks.c */
 /* Deskripsi : file BODY modul matriks integer */
@@ -8,6 +8,8 @@
 /***********************************/
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 /* include matriks.h & boolean.h */
 #include "matriks.h"
 
@@ -20,11 +22,13 @@ void initMatriks(Matriks *M)
 {
     // kamus lokal
     int i, j;
+    size_t sizeMatrix;
 
     // algoritma
-    for (i = 1; i < sizeof(*M).cell; i++)
+
+    for (i = 1; i <= BMAX; i++)
     {
-        for (j = 1; j < sizeof(*M).cell[i]; j++)
+        for (j = 1; j <= KMAX; j++)
         {
             (*M).cell[i][j] = -999;
         }
@@ -109,17 +113,31 @@ void addX(Matriks *M, int X, int row, int col)
 void delX(Matriks *M, int X)
 {
     // kamus lokal
-    int row, col;
+    int row, col, i, j, countRow, countCol;
 
     // algoritma
     row = 0;
     col = 0;
-    searchX(*M, X, row, col);
+    searchX(*M, X, &row, &col);
 
     if (row != 0 && col != 0)
     {
         (*M).cell[row][col] = -999;
-        if ((*M).nbaris)
+
+        for (i = 1; i <= BMAX; i++)
+        {
+            for (j = 1; j <= KMAX; j++)
+            {
+                if ((*M).cell[i][j] != -999)
+                {
+                    countRow = i;
+                    countCol = j;
+                }
+            }
+        }
+
+        (*M).nbaris = countRow;
+        (*M).nkolom = countCol;
     }
 }
 
@@ -127,45 +145,179 @@ void delX(Matriks *M, int X)
     {I.S.: M terdefinisi}
     {F.S.: M terisi dengan bilangan random sejumlah x baris dan y kolom, nbaris=x, nkolom=y}
     {proses: mengisi matriks dengan bilangan integer random dengan jumlah baris x dan kolom y} */
-void isiMatriksRandom(Matriks *M, int x, int y);
+void isiMatriksRandom(Matriks *M, int x, int y)
+{
+    // kamus lokal
+    int i, j, randInt;
+
+    // algoritma
+    srand(time(NULL));
+    for (i = 1; i <= x; i++)
+    {
+        for (j = 1; j <= y; j++)
+        {
+            randInt = rand() % 100;
+            addX(&(*M), randInt, i, j);
+        }
+    }
+
+    (*M).nbaris = x;
+    (*M).nkolom = y;
+}
 
 /* procedure isiMatriksIdentitas(input/output M: Matriks, input n: integer)
     {I.S.: M terdefinisi}
     {F.S.: M terisi dengan matriks identitas berukuran n x n, nbaris=nkolom=n}
     {proses: mengisi matriks dengan matriks identitas berukuran n x n} */
-void isiMatriksIdentitas(Matriks *M, int n);
+void isiMatriksIdentitas(Matriks *M, int n)
+{
+    // kamus lokal
+    int i, j;
+
+    // algoritma
+    for (i = 1; i <= n; i++)
+    {
+        for (j = 1; j <= n; j++)
+        {
+            if (i == j)
+            {
+                (*M).cell[i][j] = 1;
+            }
+            else
+            {
+                (*M).cell[i][j] = 0;
+            }
+        }
+    }
+
+    (*M).nbaris = n;
+    (*M).nkolom = n;
+}
 
 /* OPERASI BACA/TULIS */
 /* procedure populateMatriks(input/output M: Matriks, input x: integer, input y: integer)
 {I.S.: M terdefinisi}
 {F.S.: M terisi dengan inputan dari keybord sejumlah x baris dan y kolom, nbaris=x, nkolom=y}
 {proses: mengisi matriks dengan meminta inputan dari keyboard dengan jumlah baris x dan kolom y} */
-void populateMatriks(Matriks *M, int x, int y);
+void populateMatriks(Matriks *M, int x, int y)
+{
+    // kamus lokal
+    int i, j, userInput;
+
+    // algoritma
+    for (i = 1; i <= x; i++)
+    {
+        for (j = 1; j <= y; j++)
+        {
+            printf("Masukkan input untuk elemen baris ke-%d kolom ke-%d: ", i, j);
+            scanf("%d", &userInput);
+            (*M).cell[i][j] = userInput;
+        }
+    }
+
+    (*M).nbaris = x;
+    (*M).nkolom = y;
+}
 
 /* procedure printMatriks(input M:Matriks)
     {I.S.: M terdefinisi}
     {F.S.: -}
     {Proses: menampilkan semua elemen M.cell ke layar} */
-void printMatriks(Matriks M);
+void printMatriks(Matriks M)
+{
+    // kamus lokal
+    int i, j, currCell;
+
+    // algoritma
+    for (i = 1; i <= BMAX; i++)
+    {
+        for (j = 1; j <= KMAX; j++)
+        {
+            currCell = M.cell[i][j];
+            j == KMAX - 1 ? printf("%d\n", currCell) : printf("%d | ", currCell);
+        }
+    }
+}
 
 /* procedure viewMatriks (input M:Matriks)
     {I.S.: M terdefinisi}
     {F.S.: -}
     {Proses: menampilkan elemen M.cell yang terisi ke layar} */
-void viewMatriks(Matriks M);
+void viewMatriks(Matriks M)
+{
+    // kamus lokal
+    int i, j, currCell;
+
+    // algoritma
+    for (i = 1; i <= BMAX; i++)
+    {
+        for (j = 1; j <= KMAX; j++)
+        {
+            currCell = M.cell[i][j];
+            if (currCell != -999)
+            {
+                printf("%d | ", currCell);
+            }
+        }
+    }
+}
 
 /* OPERASI ARITMATIKA */
 /* function addMatriks(M1,M2: Matriks) -> Matriks
 {mengembalikan hasil penjumlahan matriks M1 dengan M2} */
-Matriks addMatriks(Matriks M1, Matriks M2);
+Matriks addMatriks(Matriks M1, Matriks M2)
+{
+    // kamus lokal
+    int i, j, tempHasil;
+    Matriks MHasil;
+
+    // algoritma
+    initMatriks(&MHasil);
+    if (getNBaris(M1) == getNBaris(M2) && getNKolom(M1) == getNKolom(M2))
+    {
+        for (i = 1; i <= getNBaris(M1); i++)
+        {
+            for (j = 1; j <= getNKolom(M1); j++)
+            {
+                tempHasil = M1.cell[i][j] + M2.cell[i][j];
+                addX(&MHasil, tempHasil, i, j);
+            }
+        }
+    }
+
+    return MHasil;
+}
 
 /* function subMatriks(M1,M2: Matriks) -> Matriks
 {mengembalikan hasil pengurangan antara matriks M1 dengan M2} */
-Matriks subMatriks(Matriks M1, Matriks M2);
+Matriks subMatriks(Matriks M1, Matriks M2)
+{
+    // kamus lokal
+    int i, j, tempHasil;
+    Matriks MHasil;
+
+    // algoritma
+    initMatriks(&MHasil);
+    if (getNBaris(M1) == getNBaris(M2) && getNKolom(M1) == getNKolom(M2))
+    {
+        for (i = 1; i <= getNBaris(M1); i++)
+        {
+            for (j = 1; j <= getNKolom(M1); j++)
+            {
+                tempHasil = M1.cell[i][j] - M2.cell[i][j];
+                addX(&MHasil, tempHasil, i, j);
+            }
+        }
+    }
+
+    return MHasil;
+}
 
 /* function kaliMatriks(M1,M2: Matriks) -> Matriks
 {mengembalikan hasil perkalian antara matriks M1 dengan M2} */
-Matriks kaliMatriks(Matriks M1, Matriks M2);
+Matriks kaliMatriks(Matriks M1, Matriks M2)
+{
+}
 
 /* function kaliSkalarMatriks(M: Matriks, x: integer) -> Matriks
 {mengembalikan perkalian antara matriks M dengan nilai skalar x} */
@@ -210,15 +362,15 @@ void searchX(Matriks M, int X, int *row, int *col)
     boolean found;
 
     // algoritma
-    while (i < sizeof M.cell && !found)
+    while (i < BMAX && !found)
     {
-        while (j < sizeof M.cell[i] && !found)
+        while (j < KMAX && !found)
         {
             if (M.cell[i][j] == X)
             {
                 found = true;
-                row = i;
-                col = j;
+                *row = i;
+                *col = j;
             }
             j++;
         }
@@ -235,9 +387,9 @@ int countX(Matriks M, int X)
 
     // algoritma
     count = 0;
-    for (i = 1; i < sizeof M.cell; i++)
+    for (i = 1; i < BMAX; i++)
     {
-        for (j = 1; j < sizeof M.cell[i]; j++)
+        for (j = 1; j < KMAX; j++)
         {
             if (M.cell[i][j] == X)
             {
