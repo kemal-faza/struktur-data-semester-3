@@ -9,7 +9,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 /* include matriks.h & boolean.h */
 #include "matriks.h"
 
@@ -151,7 +150,6 @@ void isiMatriksRandom(Matriks *M, int x, int y)
     int i, j, randInt;
 
     // algoritma
-    srand(time(NULL));
     for (i = 1; i <= x; i++)
     {
         for (j = 1; j <= y; j++)
@@ -339,9 +337,6 @@ Matriks kaliMatriks(Matriks M1, Matriks M2)
         }
     }
 
-    MHasil.nbaris = i;
-    MHasil.nkolom = j;
-
     return MHasil;
 }
 
@@ -457,8 +452,8 @@ Matriks maxPooling(Matriks M, int size)
                         }
                     }
                 }
-                row = size % 2 == 0 ? i / size + 1 : i / size;
-                col = size % 2 == 0 ? j / size + 1 : j / size;
+                row = (i - 1) / size + 1;
+                col = (j - 1) / size + 1;
                 addX(&MHasil, max, row, col);
             }
         }
@@ -492,8 +487,8 @@ Matriks avgPooling(Matriks M, int size)
                     }
                 }
                 avg = sum / (size * size);
-                row = size % 2 == 0 ? i / size + 1 : i / size;
-                col = size % 2 == 0 ? j / size + 1 : j / size;
+                row = (i - 1) / size + 1;
+                col = (j - 1) / size + 1;
                 addX(&MHasil, avg, row, col);
             }
         }
@@ -504,7 +499,40 @@ Matriks avgPooling(Matriks M, int size)
 
 /* function conv(M: Matriks, K:Matriks)
     {menghasilkan matriks hasil konvolusi matriks M dengan kernel K  */
-Matriks conv(Matriks M, Matriks K);
+Matriks conv(Matriks M, Matriks K)
+{
+    // kamus lokal
+    int i, j, k, l, m, n, rowM, colM, rowK, colK, avg, sum, row, col;
+    Matriks MHasil;
+
+    // algoritma
+    initMatriks(&MHasil);
+    rowM = getNBaris(M);
+    colM = getNKolom(M);
+    rowK = getNBaris(K);
+    colK = getNKolom(K);
+
+    if (rowM >= rowK && colM > colK)
+    {
+        for (i = 1; i <= rowM - rowK + 1; i++)
+        {
+            for (j = 1; j <= colM - colK + 1; j++)
+            {
+                sum = 0;
+                for (k = 0; k < rowK; k++)
+                {
+                    for (l = 0; l < colK; l++)
+                    {
+                        sum += M.cell[k + i][l + j] * K.cell[k + 1][k + 1];
+                    }
+                }
+                addX(&MHasil, sum, i, j);
+            }
+        }
+    }
+
+    return MHasil;
+}
 
 /* OPERASI PENCARIAN*/
 /* procedure searchX( input M:Matriks, input X: integer, output row: integer, output col: integer )
@@ -518,8 +546,11 @@ void searchX(Matriks M, int X, int *row, int *col)
     boolean found;
 
     // algoritma
+    i = 1;
+    found = false;
     while (i <= BMAX && !found)
     {
+        j = 1;
         while (j <= KMAX && !found)
         {
             if (M.cell[i][j] == X)
