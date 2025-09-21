@@ -18,10 +18,6 @@ typedef struct
     int top;
 } Tstack;
 
-// KONSTANTA
-#define BMAX 10
-#define KMAX 10
-
 /* KONSTRUKTOR */
 /* procedure createStack(output S: Tstack)
     {I.S.: - }
