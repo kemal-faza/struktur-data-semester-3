@@ -110,4 +110,33 @@ void viewStack(Tstack S)
 }
 
 /* OPERASI LAINNYA */
+boolean isValidKurung(char *str)
+{
+    Tstack S;
+    createStack(&S);
+    for (int i = 0; str[i] != '\0'; i++)
+    {
+        if (str[i] == '(' || str[i] == '{' || str[i] == '[')
+        {
+            push(&S, str[i]);
+        }
+        else if (str[i] == ')' || str[i] == '}' || str[i] == ']')
+        {
+            if (isEmptyStack(S))
+            {
+                return false;
+            }
+            char temp;
+            pop(&S, &temp);
+
+            if ((str[i] == ')' && temp != '(') ||
+                (str[i] == '}' && temp != '{') ||
+                (str[i] == ']' && temp != '['))
+            {
+                return false;
+            }
+        }
+    }
+    return isEmptyStack(S);
+}
 // masukkan deskripsi dan spesifikasi fungsi pada soal di sini

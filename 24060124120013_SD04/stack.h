@@ -69,6 +69,7 @@ void printStack(Tstack S);
 void viewStack(Tstack S);
 
 /* OPERASI LAINNYA */
+boolean isValidKurung(char *str);
 // masukkan deskripsi dan spesifikasi fungsi pada soal di sini
 
 #endif
