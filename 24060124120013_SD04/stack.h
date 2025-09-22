@@ -54,7 +54,7 @@ void push(Tstack *S, char e);
     {I.S.: S terdefinisi, mungkin kosong}
     {F.S.: S tetap, atau e berisi infoTop(S) lama}
     {Proses: menghapus elemen e dari puncak S, bila belum kosong} */
-void push(Tstack *S, char e);
+void pop(Tstack *S, char e);
 
 /* procedure printStack(input S:Tstack)
     {I.S.: S terdefinisi}
