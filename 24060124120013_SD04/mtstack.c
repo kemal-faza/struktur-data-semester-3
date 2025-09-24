@@ -1,0 +1,25 @@
+/* Program   : mtstack.c */
+/* Deskripsi : file DRIVER modul stack karakter */
+/* NIM/Nama  : 24060124120013/Muhamad Kemal Faza */
+/* Tanggal   : 24-09-2025 */
+/***********************************/
+
+#include <stdio.h>
+#include "tstack.h"
+/* include tstack+boolean */
+
+int main()
+{
+	/* kamus main */
+	Tstack A; // variabel A bertipe tStack
+
+	/* algoritma */
+	createStack(&A);
+	push(&A, 'A');
+	push(&A, 'B');
+	push(&A, 'C');
+	printStack(A);
+	viewStack(A);
+
+	return 0;
+}

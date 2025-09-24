@@ -14,8 +14,12 @@
     {Proses mengisi elemen wadah kosong dengan '_', top 0} */
 void createStack(Tstack *S)
 {
+    // kamus lokal
+    int i;
+
+    // algoritma
     (*S).top = 0;
-    for (int i = 1; i <= 10; i++)
+    for (i = 1; i <= 10; i++)
     {
         (*S).wadah[i] = '_';
     }
@@ -30,7 +34,6 @@ int infoTop(Tstack S)
     {
         return S.wadah[top(S)];
     }
-    return -1; // Menandakan stack kosong
 }
 
 /* function top(S: Tstack) -> integer
@@ -89,7 +92,11 @@ void pop(Tstack *S, char *e)
     {Proses: menampilkan semua elemen S ke layar} */
 void printStack(Tstack S)
 {
-    for (int i = 1; i <= 10; i++)
+    // kamus lokal
+    int i;
+
+    // algoritma
+    for (i = 1; i <= 10; i++)
     {
         printf("%c ", S.wadah[i]);
     }
@@ -102,7 +109,11 @@ void printStack(Tstack S)
     {Proses: menampilkan elemen S yang terisi ke layar} */
 void viewStack(Tstack S)
 {
-    for (int i = 1; i <= S.top; i++)
+    // kamus lokal
+    int i;
+
+    // algoritma
+    for (i = 1; i <= S.top; i++)
     {
         printf("%c ", S.wadah[i]);
     }
@@ -110,11 +121,16 @@ void viewStack(Tstack S)
 }
 
 /* OPERASI LAINNYA */
-boolean isValidKurung(char *str)
+boolean isValidKurung(char *str, int n)
 {
+    // kamus lokal
     Tstack S;
+    int i;
+    char temp;
+
+    // algoritma
     createStack(&S);
-    for (int i = 0; str[i] != '\0'; i++)
+    for (i = 0; i < n; i++)
     {
         if (str[i] == '(' || str[i] == '{' || str[i] == '[')
         {
@@ -126,7 +142,6 @@ boolean isValidKurung(char *str)
             {
                 return false;
             }
-            char temp;
             pop(&S, &temp);
 
             if ((str[i] == ')' && temp != '(') ||
