@@ -30,7 +30,6 @@ void backwardBrowser(Tstack *Current, Tstack *Backward, char *link)
 	// algoritma
 	if (!isEmptyStack(*Current))
 	{
-
 		pop(&(*Current), &(*link));
 		push(&(*Backward), *link);
 	}
