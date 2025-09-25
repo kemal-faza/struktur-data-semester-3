@@ -73,7 +73,7 @@ void viewStack(Tstack T);
 /* boolean isPalindrom(kata:String)
    {mengembalikan true jika kata merupakan palindrom, false jika tidak},
    {asumsi panjang kata maksimum adalah 30 karakter} */
-boolean isPalindrom(char kata[30]);
+boolean isPalindrom(char kata[20]);
 
 /*procedure pushN ( input/output T:Tstack, input N: integer )
 	{I.S.: T,N terdefinisi}

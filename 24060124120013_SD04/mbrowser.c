@@ -8,7 +8,9 @@
 #include "tstack.h"
 /* include tstack+boolean */
 
-int main()
+void addLink(Tstack *)
+
+	int main()
 {
 	/* kamus main */
 	Tstack A; // variabel A bertipe tStack

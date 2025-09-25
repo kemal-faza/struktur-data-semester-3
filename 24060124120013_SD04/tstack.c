@@ -140,16 +140,54 @@ void viewStack(Tstack T)
 
 /* boolean isPalindrom(kata:String)
    {mengembalikan true jika kata merupakan palindrom, false jika tidak},
-   {asumsi panjang kata maksimum adalah 30 karakter} */
-boolean isPalindrom(char kata[30])
+   {asumsi panjang kata maksimum adalah 20 karakter} */
+boolean isPalindrom(char kata[20])
 {
     // kamus lokal
+    int i, len;
+    Tstack S;
+    char temp;
 
     // algoritma
+    createStack(&S);
+    i = 0;
+    len = strlen(kata);
+
+    for (i = 0; i <= len / 2; i++)
+    {
+        push(&S, kata[i]);
+    }
+
+    i = len;
+    while (isEmptyStack(S))
+    {
+        pop(&S, &temp);
+        if (kata[i] != temp)
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 /*procedure pushN ( input/output T:Tstack, input N: integer )
     {I.S.: T,N terdefinisi}
     {F.S.: infotop tetap, atau top=N }
     {Proses: mengisi elemen top baru N kali dari keyboard, bila belum penuh }*/
-void pushN(Tstack *T, int N);
+void pushN(Tstack *T, int N)
+{
+    // kamus lokal
+    int i;
+    char input;
+
+    // algoritma
+    i = 0;
+    while (!isFullStack(*T) && i < N)
+    {
+        printf("Masukkan input elemen ke-%d: ", top(*T) + 1);
+        scanf(" %c", &input);
+        push(&(*T), input);
+        i++;
+    }
+}
