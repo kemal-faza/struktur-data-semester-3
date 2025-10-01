@@ -20,18 +20,6 @@ typedef struct
     int tail;
 } tqueue2;
 
-/*function isEmptyQueue2(Q:tQueue2) -> boolean
-{mengembalikan true jika Q kosong}*/
-boolean isEmptyQueue2(tqueue2 Q);
-
-/*function isFullQueue2(Q:tQueue2) -> boolean
-{mengembalikan true jika Q penuh}*/
-boolean isFullQueue2(tqueue2 Q);
-
-/*function isOneElement2(Q:tQueue2) -> boolean
-{mengembalikan true jika Q berisi 1 elemen}*/
-boolean isOneElement2(tqueue2 Q);
-
 /*procedure createQueue2 ( output Q:tQueue2 )
 {I.S.: -}
 {F.S.: Q terdefinisi, kosong}
@@ -69,6 +57,18 @@ void printQueue2(tqueue2 Q);
 {F.S.: -}
 {proses: mencetak elemen yang tidak kosong ke layar}*/
 void viewQueue2(tqueue2 Q);
+
+/*function isEmptyQueue2(Q:tQueue2) -> boolean
+{mengembalikan true jika Q kosong}*/
+boolean isEmptyQueue2(tqueue2 Q);
+
+/*function isFullQueue2(Q:tQueue2) -> boolean
+{mengembalikan true jika Q penuh}*/
+boolean isFullQueue2(tqueue2 Q);
+
+/*function isOneElement2(Q:tQueue2) -> boolean
+{mengembalikan true jika Q berisi 1 elemen}*/
+boolean isOneElement2(tqueue2 Q);
 
 /*Function IsTailStop(Q:TQueue2) -> boolean
 {mengembalikan true jika Tail tidak dapat lagi geser}

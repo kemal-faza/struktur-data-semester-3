@@ -30,6 +30,9 @@ void createQueue(tqueue *Q)
 /*pikirkan bila antrian kosong*/
 char infoHead(tqueue Q)
 {
+    // kamus lokal
+
+    // algoritma
     if (isEmptyQueue(Q))
     {
         return '-';
@@ -45,6 +48,9 @@ char infoHead(tqueue Q)
 /*pikirkan bila antrian kosong*/
 char infoTail(tqueue Q)
 {
+    // kamus lokal
+
+    // algoritma
     if (isEmptyQueue(Q))
     {
         return '-';
@@ -112,6 +118,9 @@ boolean isEmptyQueue(tqueue Q)
 {mengembalikan true jika Q penuh}*/
 boolean isFullQueue(tqueue Q)
 {
+    // kamus lokal
+
+    // algoritma
     return tail(Q) == 5;
 }
 
@@ -119,6 +128,9 @@ boolean isFullQueue(tqueue Q)
 {mengembalikan true jika hanya ada 1 elemen }*/
 boolean isOneElement(tqueue Q)
 {
+    // kamus lokal
+
+    // algoritma
     return head(Q) == 1 && tail(Q) == 1;
 }
 
@@ -128,6 +140,9 @@ boolean isOneElement(tqueue Q)
 {proses: menambah elemen wadah Q } */
 void enqueue(tqueue *Q, char e)
 {
+    // kamus lokal
+
+    // algoritma
     if (isEmptyQueue(*Q))
     {
         head(*Q) = 1;
@@ -175,27 +190,30 @@ void dequeue(tqueue *Q, char *e)
 {proses: menambah elemen wadah pada antrian terpendek dari Q1 atau Q2} */
 void enqueue2(tqueue *Q1, tqueue *Q2, char e)
 {
+    // kamus lokal
+
+    // algoritma
     if (isEmptyQueue(*Q1) && isEmptyQueue(*Q2))
     {
-        enqueue(Q1, e);
+        enqueue(&(*Q1), e);
     }
     else if (isFullQueue(*Q1))
     {
-        enqueue(Q2, e);
+        enqueue(&(*Q2), e);
     }
     else if (isFullQueue(*Q2))
     {
-        enqueue(Q1, e);
+        enqueue(&(*Q1), e);
     }
     else if (!isFullQueue(*Q1) && !isFullQueue(*Q2))
     {
         if (sizeQueue(*Q1) <= sizeQueue(*Q2))
         {
-            enqueue(Q1, e);
+            enqueue(&(*Q1), e);
         }
         else
         {
-            enqueue(Q2, e);
+            enqueue(&(*Q2), e);
         }
     }
 }
@@ -207,6 +225,9 @@ void enqueue2(tqueue *Q1, tqueue *Q2, char e)
 {bila awalnya 1 elemen, maka Head dan Tail antrian menjadi 0 } */
 void dequeue2(tqueue *Q1, tqueue *Q2, char *e)
 {
+    // kamus lokal
+
+    // algoritma
     if (isEmptyQueue(*Q1) && isEmptyQueue(*Q2))
     {
         *e = infoHead(*Q1);
