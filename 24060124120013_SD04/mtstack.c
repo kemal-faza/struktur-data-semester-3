@@ -7,17 +7,6 @@
 #include <stdio.h>
 #include "tstack.h"
 
-static const char *b2s(boolean b) { return b ? "true" : "false"; }
-
-static int countFilled(Tstack T)
-{
-	int i, cnt = 0;
-	for (i = 1; i <= 10; i++)
-		if (T.wadah[i] != '#')
-			cnt++;
-	return cnt;
-}
-
 int main(void)
 {
 	Tstack S;
