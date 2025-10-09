@@ -163,7 +163,7 @@ void viewQueue3(tqueue3 Q)
             {
                 break;
             }
-            i = (i % 5) + 1; // memutar ke 1 setelah 5
+            i = (i % 5) + 1;
         }
         printf("\n");
     }
@@ -186,7 +186,7 @@ void enqueue3(tqueue3 *Q, char E)
     }
     else if (!isFullQueue3(*Q))
     {
-        (*Q).tail = ((*Q).tail % 5) + 1; // memutar ke 1 setelah 5
+        (*Q).tail = ((*Q).tail % 5) + 1;
         (*Q).wadah[(*Q).tail] = E;
     }
 }
@@ -211,7 +211,7 @@ void dequeue3(tqueue3 *Q, char *E)
         }
         else
         {
-            (*Q).head = ((*Q).head % 5) + 1; // memutar ke 1 setelah 5
+            (*Q).head = ((*Q).head % 5) + 1;
         }
     }
     else
