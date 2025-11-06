@@ -4,4 +4,9 @@
 !.gitignore
 tugas_individu_1/
 .vscode/
-mainOutput,*
+
+# Ignore compiled executables and output files
+mainOutput*
+**/mainOutput*
+*.out
+a.out
