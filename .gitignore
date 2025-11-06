@@ -2,3 +2,6 @@
 *.exe
 *.md
 !.gitignore
+tugas_individu_1/
+.vscode/
+mainOutput,*
