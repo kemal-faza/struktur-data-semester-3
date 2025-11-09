@@ -300,9 +300,10 @@ int CountVocal(List1 L, infotype X)
 	return count;
 }
 
-/*function CountX(L:List1, X:infotype) -> integer */
-/*{ mengembalikan banyaknya kemunculan X dalam list L}*/
-int CountX(List1 L, infotype X)
+/*********** SOAL TAMBAHAN, DIKERJAKAN BILA LUANG *****************/
+/*function CountVocal(L:List1) -> integer */
+/*{ mengembalikan banyaknya kemunculan huruf vokal dalam list L}*/
+int CountVocal(List1 L)
 {
 	// kamus lokal
 	address P;
@@ -313,7 +314,8 @@ int CountX(List1 L, infotype X)
 	P = First(L);
 	while (P != NIL)
 	{
-		if (info(P) == X)
+		if (info(P) == 'a' || info(P) == 'i' || info(P) == 'u' || info(P) == 'e' || info(P) == 'o' ||
+			info(P) == 'A' || info(P) == 'I' || info(P) == 'U' || info(P) == 'E' || info(P) == 'O')
 		{
 			count++;
 		}
