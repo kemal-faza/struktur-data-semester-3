@@ -301,6 +301,28 @@ int CountVocal(List1 L)
 	return count;
 }
 
+/*function CountX(L:List1, X:infotype) -> integer */
+/*{ mengembalikan banyaknya kemunculan X dalam list L}*/
+int CountX(List1 L, infotype X)
+{
+	// kamus lokal
+	address P;
+	int count;
+
+	// algoritma
+	count = 0;
+	P = First(L);
+	while (P != NIL)
+	{
+		if (info(P) == X)
+		{
+			count++;
+		}
+		P = next(P);
+	}
+	return count;
+}
+
 /*function FrekuensiX(L:List1, X:infotype) -> real */
 /*{ mengembalikan rasio kemunculan X dibandingkan ukuran list L }*/
 float FrekuensiX(List1 L, infotype X)
