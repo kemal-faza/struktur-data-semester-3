@@ -71,7 +71,7 @@ void CreateList(List1 *L)
 	// kamus lokal
 
 	// algoritma
-	First(*L) = NIL;
+	First(*L) = NIL; // mengisi nilai elemen List dengan Nil
 }
 
 /****************** TEST LIST KOSONG ******************/
@@ -79,8 +79,10 @@ void CreateList(List1 *L)
    {mengembalikan true bila list L kosong} */
 boolean IsEmptyList(List1 L)
 {
+	// kamus lokal
+
 	// algoritma
-	return (First(L) == NIL);
+	return (First(L) == NIL); // membandingkan elemen di list dengan nilai Nil
 }
 
 /*function NbElm(L:List1) --> integer
@@ -95,10 +97,11 @@ int NbElm(List1 L)
 	count = 0;
 	P = First(L);
 	while (P != NIL)
-	{
+	{ // P tidak kosong
 		count++;
 		P = next(P);
 	}
+	// endWhile - P kosong
 	return count;
 }
 
@@ -136,16 +139,17 @@ void InsertVLast(List1 *L, infotype V)
 	if (P != NIL)
 	{ // alokasi berhasil
 		if (IsEmptyList(*L))
-		{
+		{ // list kosong
 			First(*L) = P;
 		}
 		else
-		{
+		{ // list tidak kosong
 			Q = First(*L);
 			while (next(Q) != NIL)
-			{
+			{ // alamat elemen selanjutnya tidak kosong
 				Q = next(Q);
 			}
+			// endWhile - alamat elemen selanjutnya kosong
 			next(Q) = P;
 		}
 	}
@@ -164,7 +168,7 @@ void DeleteVFirst(List1 *L, infotype *V)
 
 	// algoritma
 	if (!IsEmptyList(*L))
-	{
+	{ // list tidak kosong
 		P = First(*L);
 		*V = info(P);
 		First(*L) = next(P);
@@ -185,7 +189,7 @@ void DeleteVLast(List1 *L, infotype *V)
 
 	// algoritma
 	if (!IsEmptyList(*L))
-	{
+	{ // list tidak kosong
 		if (next(First(*L)) == NIL)
 		{ // hanya satu elemen
 			P = First(*L);
@@ -194,16 +198,17 @@ void DeleteVLast(List1 *L, infotype *V)
 			Dealokasi(P);
 		}
 		else
-		{
+		{ // lebih dari satu elemen
 			Q = First(*L);
 			while (next(next(Q)) != NIL)
-			{
+			{ // 2 elemen selanjutnya tidak kosong
 				Q = next(Q);
 			}
+			// endWhile - 2 elemen selanjutnya kosong
 			P = next(Q);
 			*V = info(P);
 			next(Q) = NIL;
-			Dealokasi(P);
+			Dealokasi(P); // dealokasi memori
 		}
 	}
 }
@@ -222,14 +227,15 @@ void SearchX(List1 L, infotype X, address *A)
 	P = First(L);
 	*A = NIL;
 	while (P != NIL)
-	{
+	{ // P tidak kosong
 		if (info(P) == X)
-		{
+		{ // isi P sama dengan X
 			*A = P;
 			break;
 		}
-		P = next(P);
+		P = next(P); // lanjut ke elemen selanjutnya
 	}
+	// endWhile - P kosong
 }
 
 /*** MANIPULASI ELEMEN LIST ***/
@@ -245,13 +251,14 @@ void UpdateX(List1 *L, infotype X, infotype Y)
 	// algoritma
 	P = First(*L);
 	while (P != NIL)
-	{
+	{ // P tidak kosong
 		if (info(P) == X)
-		{
+		{ // isi P sama dengan X
 			info(P) = Y;
 		}
-		P = next(P);
+		P = next(P); // lanjut ke elemen selanjutnya
 	}
+	// endWhile - P kosong
 }
 
 /*Procedure Invers(input/output L:List1)
@@ -268,12 +275,13 @@ void Invers(List1 *L)
 	Prev = NIL;
 	P = First(*L);
 	while (P != NIL)
-	{
+	{ // P tidak kosong
 		Next = next(P);
 		next(P) = Prev;
 		Prev = P;
 		P = Next;
 	}
+	// endWhile - P kosong
 	First(*L) = Prev;
 }
 
@@ -290,14 +298,15 @@ int CountVocal(List1 L)
 	count = 0;
 	P = First(L);
 	while (P != NIL)
-	{
+	{ // kalau P tidak kosong
 		if (info(P) == 'a' || info(P) == 'i' || info(P) == 'u' || info(P) == 'e' || info(P) == 'o' ||
 			info(P) == 'A' || info(P) == 'I' || info(P) == 'U' || info(P) == 'E' || info(P) == 'O')
-		{
+		{ // isi P sama dengan huruf vokal, baik lowercase maupun uppercase
 			count++;
 		}
-		P = next(P);
+		P = next(P); // lanjut ke elemen selanjutnya
 	}
+	// endWhile - P kosong
 	return count;
 }
 
@@ -313,13 +322,14 @@ int CountX(List1 L, infotype X)
 	count = 0;
 	P = First(L);
 	while (P != NIL)
-	{
+	{ // isi P tidak kosong
 		if (info(P) == X)
-		{
+		{ // isi elemen P sama dengan X
 			count++;
 		}
 		P = next(P);
 	}
+	// endWhile - P kosong
 	return count;
 }
 
@@ -333,11 +343,11 @@ float FrekuensiX(List1 L, infotype X)
 	// algoritma
 	count = CountX(L, X);
 	if (count == 0)
-	{
+	{ // tidak pernah muncul
 		return 0;
 	}
 	else
-	{
+	{ // muncul minimal satu kali
 		return (float)count / NbElm(L);
 	}
 }
@@ -357,14 +367,15 @@ void SearchAllX(List1 L, infotype X)
 	position = 1;
 	printf("Posisi kemunculan elemen %c : ", X);
 	while (P != NIL)
-	{
+	{ // P tidak kosong
 		if (info(P) == X)
-		{
+		{ // isi P sama dengan X
 			printf("%d ", position);
 		}
-		P = next(P);
+		P = next(P); // lanjut ke elemen selanjutnya
 		position++;
 	}
+	// endWhile - P kosong
 	printf("\n");
 }
 
@@ -380,13 +391,14 @@ void UpdateAllX(List1 *L, infotype X, infotype Y)
 	// algoritma
 	P = First(*L);
 	while (P != NIL)
-	{
+	{ // P tidak kosong
 		if (info(P) == X)
-		{
+		{ // isi P sama dengan X
 			info(P) = Y;
 		}
-		P = next(P);
+		P = next(P); // lanjut ke elemen selanjutnya
 	}
+	// endWhile - P kosong
 }
 
 /* Procedure InsertVAfter(input/output L:List1, input V:infotype, input VA:infotype )
@@ -402,9 +414,9 @@ void InsertVAfter(List1 *L, infotype V, infotype VA)
 	// algoritma
 	Q = First(*L);
 	while (Q != NIL)
-	{
+	{ // Q tidak kosong
 		if (info(Q) == V)
-		{
+		{ // isi Q sama dengan V
 			P = Alokasi(VA);
 			if (P != NIL)
 			{ // alokasi berhasil
@@ -413,8 +425,9 @@ void InsertVAfter(List1 *L, infotype V, infotype VA)
 			}
 			break; // keluar dari loop setelah menyisipkan
 		}
-		Q = next(Q);
+		Q = next(Q); // lanjut ke elemen selanjutnya
 	}
+	// endWhile - Q kosong
 }
 
 /*function Modus(L:List1) -> infotype */
@@ -432,15 +445,16 @@ infotype Modus(List1 L)
 	maxCount = 0;
 	P = First(L);
 	while (P != NIL)
-	{
+	{ // P tidak kosong
 		count = CountX(L, info(P));
 		if (count > maxCount)
-		{
+		{ // jika count sekarang lebih besar daripada count sebelumnya
 			maxCount = count;
 			modus = info(P);
 		}
-		P = next(P);
+		P = next(P); // lanjut ke elemen selanjutnya
 	}
+	// endWhile - P kosong
 	return modus;
 }
 
@@ -458,13 +472,14 @@ int NbModus(List1 L)
 	count = 0;
 	P = First(L);
 	while (P != NIL)
-	{
+	{ // P tidak kosong
 		if (info(P) == modus)
-		{
+		{ // isi P sama dengan modus
 			count++;
 		}
-		P = next(P);
+		P = next(P); // lanjut ke elemen selanjutnya
 	}
+	// endWhile - P kosong
 	return count;
 }
 
@@ -479,18 +494,20 @@ void ConcatList(List1 L1, List1 L2, List1 *L)
 
 	// algoritma
 	CreateList(L);
-	P = First(L1);
+	P = First(L1); // inisiasi list pertama
 	while (P != NIL)
-	{
+	{ // P tidak kosong
+		InsertVLast(L, info(P));
+		P = next(P); // lanjut ke elemen selanjutnya
+	}
+	// endWhile - P kosong
+	P = First(L2); // inisiasi list kedua
+	while (P != NIL)
+	{ // P tidak kosong
 		InsertVLast(L, info(P));
 		P = next(P);
 	}
-	P = First(L2);
-	while (P != NIL)
-	{
-		InsertVLast(L, info(P));
-		P = next(P);
-	}
+	// endWhile - P kosong
 }
 
 /*Procedure SplitList(input L:List1, output L1:List1, output L2:List1)
@@ -508,18 +525,19 @@ void SplitList(List1 L, List1 *L1, List1 *L2)
 	P = First(L);
 	i = 1;
 	while (P != NIL)
-	{
+	{ // P tidak kosong
 		if (i % 2 == 1)
-		{
+		{ // urutan elemen ganjil
 			InsertVLast(L1, info(P));
 		}
 		else
-		{
+		{ // urutan elemen genap
 			InsertVLast(L2, info(P));
 		}
-		P = next(P);
+		P = next(P); // Lanjut ke elemen berikutnya
 		i++;
 	}
+	// endWhlle - P kosong
 }
 
 /*Procedure CopyList(input L1:List1, output L2:List1)
@@ -534,8 +552,9 @@ void CopyList(List1 L1, List1 *L2)
 	CreateList(L2);
 	P = First(L1);
 	while (P != NIL)
-	{
+	{ // P tidak kosong
 		InsertVLast(L2, info(P));
 		P = next(P);
 	}
+	// endWhile - P kosong
 }

@@ -1,7 +1,7 @@
 /* File : main.c */
 /* Deskripsi : aplikasi driver ADT list berkait, representasi fisik pointer */
-/* NIM & Nama : */
-/* Tanggal : November 2025 */
+/* NIM & Nama : 24060124120013 & Muhamad Kemal Faza*/
+/* Tanggal : 9 November 2025 */
 #include <stdio.h>
 #include <stdlib.h>
 #include "list1.h"
