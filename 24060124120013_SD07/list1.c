@@ -278,29 +278,6 @@ void Invers(List1 *L)
 }
 
 /*********** SOAL TAMBAHAN, DIKERJAKAN BILA LUANG *****************/
-/*function CountVocal(L:List1, X:infotype) -> integer */
-/*{ mengembalikan banyaknya kemunculan huruf vokal dalam list L}*/
-int CountVocal(List1 L, infotype X)
-{
-	// kamus lokal
-	address P;
-	int count;
-
-	// algoritma
-	count = 0;
-	P = First(L);
-	while (P != NIL)
-	{
-		if (info(P) == X)
-		{
-			count++;
-		}
-		P = next(P);
-	}
-	return count;
-}
-
-/*********** SOAL TAMBAHAN, DIKERJAKAN BILA LUANG *****************/
 /*function CountVocal(L:List1) -> integer */
 /*{ mengembalikan banyaknya kemunculan huruf vokal dalam list L}*/
 int CountVocal(List1 L)
