@@ -24,7 +24,6 @@ int main()
 
   // aplikasi tipe List1
   CreateList(&Senarai);            // CreateList(Senarai)
-  InsertVFirst(&Senarai, info(A)); // InsertVFirst(Senarai, 'D');
   InsertVFirst(&Senarai, info(B)); // InsertVFirst(Senarai, 'D');
   printf("Isi Senarai :");
   P = First(Senarai);
