@@ -35,9 +35,8 @@ void Dealokasi(address P)
 	// algoritma
 	if (P != NIL)
 	{
-		next(P) = NIL;
+		free(P);
 	}
-	P = NIL;
 }
 /*********** OPERATORS ***********/
 
