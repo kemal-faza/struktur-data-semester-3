@@ -596,8 +596,8 @@ char Modus(bintree P)
         }
     }
     else
-    {                // kasus pohon kosong
-        modus = '#'; // Return a default value if the tree is empty
+    { // kasus pohon kosong
+        modus = '#';
     }
     return modus;
 }
