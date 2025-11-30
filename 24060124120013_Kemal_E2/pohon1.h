@@ -1,6 +1,6 @@
 /* File : pohon1.h */
 /* Deskripsi : ADT bintree berkait dengan representasi fisik pointer */
-/* NIM & Nama : 24060124120013 & Muhamad Kemal Faza */
+/* NIM & Nama : 24060124120013 & Muhamad Kemal Faza*/
 /* Tanggal : 27-11-2025 */
 
 #ifndef pohon1_H

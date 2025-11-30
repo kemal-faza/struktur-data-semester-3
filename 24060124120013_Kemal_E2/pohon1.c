@@ -1,103 +1,219 @@
-/* File : pohon1.h */
+/* File : pohon1.c */
 /* Deskripsi : ADT bintree berkait dengan representasi fisik pointer */
-/* NIM & Nama : 24060124120013 & Muhamad Kemal Faza */
+/* NIM & Nama : 24060124120013 & Muhamad Kemal Faza*/
 /* Tanggal : 27-11-2025 */
 
-#ifndef pohon1_H
-#define pohon1_H
-#include <stdio.h>
-#include <stdlib.h>
-
-#define NIL NULL
-#define akar(P) (P)->info
-#define info(P) (P)->info
-#define left(P) (P)->left
-#define right(P) (P)->right
-typedef enum
-{
-  false,
-  true
-} boolean;
-/* typedef infotype = character */
-typedef char infotype; /* elemen bertipe character */
-/* typedef bintree = pointer to tnode */
-typedef struct tnode *bintree; /* Representasi bintree dengan pointer */
-/* typedef node =< info:infotype, left:bintree, right:bintree > */
-typedef struct tnode
-{
-  infotype info;
-  bintree left;
-  bintree right;
-} node;
-/* DEFINISI bintree kosong = NIL = ( ) */
+#include "pohon1.h"
 
 /************************ PROTOTYPE ************************/
 /*OPERATOR ALOKASI*/
 /****************** Manajemen Memori ******************/
 /* function AlokasiTree( E: infotype)-> bintree */
 /* {menghasilkan alokasi memori pohon dengan info=E, left=NIL, right=NIL  } */
-bintree AlokasiTree(infotype E); // representasi fisik fungsi
+bintree AlokasiTree(infotype E)
+{
+    // kamus lokal
+    bintree P;
+
+    // algoritma
+    P = (bintree)malloc(sizeof(node));
+    if (P != NIL)
+    {
+        info(P) = E;
+        left(P) = NIL;
+        right(P) = NIL;
+    }
+    return P;
+}
 
 /* procedure DealokasiTree (input/output P:bintree) */
 /* {I.S. P terdefinisi
     F.S. P dikembalikan ke sistem
-  Proses: Melakukan pengembalian bintree P} */
-void DealokasiTree(bintree *P);
+    Proses: Melakukan pengembalian bintree P} */
+void DealokasiTree(bintree *P)
+{
+    // kamus lokal
+
+    // algoritma
+    if (P != NIL)
+    {
+        free(P);
+    }
+    P = NIL;
+}
 
 /********** PEMBUATAN bintree KOSONG ***********/
 /* function Tree(Akar:infotype, Left:BinTree, Right:BinTree)-> BinTree
 { Menghasilkan sebuah pohon biner dari Akar, Left, dan Right, jika alokasi berhasil, atau pohon kosong (Nil) jika alokasi gagal }*/
 /*representasi logik fungsi*/
-bintree Tree(infotype akar, bintree left, bintree right);
+bintree Tree(infotype akar, bintree left, bintree right)
+{
+    // kamus lokal
+    bintree P;
+
+    // algoritma
+    P = AlokasiTree(akar);
+    if (P != NIL)
+    {
+        left(P) = left;
+        right(P) = right;
+    }
+    return P;
+}
 
 /****** SELEKTOR *****/
 /*function GetLeft (P : BinTree) -> BinTree
 { Mengirimkan Anak Kiri pohon biner P }*/
-bintree GetLeft(bintree P);
+bintree GetLeft(bintree P)
+{
+    // kamus lokal
+
+    // algoritma
+    return left(P);
+}
 
 /*function GetRight (P : BinTree) -> BinTree
 { Mengirimkan Anak Kanan pohon biner P }*/
-bintree GetRight(bintree P);
+bintree GetRight(bintree P)
+{
+    // kamus lokal
+
+    // algoritma
+    return right(P);
+}
 
 /****************** PREDIKAT ******************/
 /* function IsEmptyTree(P:bintree) --> boolean
    {mengembalikan true bila bintree L kosong} */
-boolean IsEmptyTree(bintree P);
+boolean IsEmptyTree(bintree P)
+{
+    // kamus lokal
+
+    // algoritma
+    return P == NIL;
+}
 
 /* function IsDaun (P:BinTree)-> boolean
 { Mengirimkan true jika pohon biner tidak kosong, namun anak kiri dan anak kanan kosong} */
-boolean IsDaun(bintree P);
+boolean IsDaun(bintree P)
+{
+    // kamus lokal
+
+    // algoritma
+    return !IsEmptyTree(P) && GetLeft(P) == NIL && GetRight(P) == NIL;
+}
 
 /* function IsBiner (P:BinTree)-> boolean
 { Mengirimkan true jika pohon biner tidak kosong P adalah pohon biner: mempunyai subpohon kiri dan subpohon kanan}*/
-boolean IsBiner(bintree P);
+boolean IsBiner(bintree P)
+{
+    // kamus lokal
+
+    // algoritma
+    return !IsEmptyTree(P) && GetLeft(P) != NIL && GetRight(P) != NIL;
+}
 
 /* function IsUnerLeft(P:BinTree)-> boolean
 { Mengirimkan true jika pohon biner tidak kosong P adalah pohon unerleft: hanya mempunyai subpohon kiri } */
-boolean IsUnerLeft(bintree P);
+boolean IsUnerLeft(bintree P)
+{
+    // kamus lokal
+
+    // algoritma
+    return !IsEmptyTree(P) && GetLeft(P) != NIL && GetRight(P) == NIL;
+}
 
 /* function IsUnerRight(P:BinTree)-> boolean
 { Mengirimkan true jika pohon biner tidak kosong P adalah pohon unerright: hanya mempunyai subpohon kanan}*/
-boolean IsUnerRight(bintree P);
+boolean IsUnerRight(bintree P)
+{
+    // kamus lokal
+
+    // algoritma
+    return !IsEmptyTree(P) && GetLeft(P) == NIL && GetRight(P) != NIL;
+}
 
 /*PENELUSURAN*/
 /* procedure PrintPrefix(input P:bintree)
 {I.S. L terdefinisi; F.S. :-}
 { menampilkan info semua elemen bintree P secara prefix linier lengkap} */
 /*contoh: A(B(( ),D(( ),( ))),C(( ),( )))*/
-void PrintPrefix(bintree P);
+void PrintPrefix(bintree P)
+{
+    // kamus lokal
+
+    // algoritma
+    if (P == NIL)
+    {
+        printf("()");
+    }
+    else
+    {
+        printf("%c(", info(P));
+        PrintPrefix(left(P));
+        printf(",");
+        PrintPrefix(right(P));
+        printf(")");
+    }
+}
 
 /* function NbElm(P:bintree) --> integer
 { menghitung banyaknya elemen bintree P} */
-int NbElm(bintree P);
+int NbElm(bintree P)
+{
+    // kamus lokal
+
+    // algoritma
+    if (IsEmptyTree(P))
+    {
+        return 0;
+    }
+    else
+    {
+        return 1 + NbElm(GetLeft(P)) + NbElm(GetRight(P));
+    }
+}
 
 /* function NbDaun(P:BinTree)-> integer
 { Mengirimkan banyaknya daun (node) pohon biner P }*/
-int NbDaun(bintree P);
+int NbDaun(bintree P)
+{
+    // kamus lokal
+
+    // algoritma
+    if (IsEmptyTree(P))
+    {
+        return 0;
+    }
+    else
+    {
+        if (IsDaun(P))
+        {
+            return 1;
+        }
+        else
+        {
+            return NbDaun(GetLeft(P)) + NbDaun(GetRight(P));
+        }
+    }
+}
 
 /* function max2(int a, int b)->integer
 {mengembalikan nilai maksimal dari a atau b}*/
-int max2(int a, int b);
+int max2(int a, int b)
+{
+    // kamus lokal
+
+    // algoritma
+    if (a > b)
+    {
+        return a;
+    }
+    else
+    {
+        return b;
+    }
+}
 
 /* function Tinggi(P:BinTree)-> integer
 {menghitung tinggi pohon P, tinggi pohon 1 elemen yaitu 0 }*/
@@ -106,14 +222,52 @@ int Tinggi(bintree P);
 /*** PENCARIAN ***/
 /*function SearchX(P:BinTree, X:infotype) -> boolean
 { Mengirimkan true jika ada node dari P yang bernilai X }*/
-boolean SearchX(bintree P, infotype X);
+boolean SearchX(bintree P, infotype X)
+{
+    // kamus lokal
+
+    // algoritma
+    if (IsEmptyTree(P))
+    {
+        return false;
+    }
+    else
+    {
+        if (info(P) == X)
+        {
+            return true;
+        }
+        else
+        {
+            return SearchX(GetLeft(P), X) || SearchX(GetRight(P), X);
+        }
+    }
+    return false;
+}
 
 /*** MANIPULASI ELEMEN bintree ***/
 /*Procedure UpdateX(input/output P:bintree, input X:infotype, input Y:infotype)
 { I.S. L, X, Y terdefinisi }
 { F.S. L tetap, atau elemen bernilai X berubah menjadi Y.
 Mengganti elemen bernilai X menjadi Y}*/
-void UpdateX(bintree *P, infotype X, infotype Y);
+void UpdateX(bintree *P, infotype X, infotype Y)
+{
+    // kamus lokal
+
+    // algoritma
+    if (!IsEmptyTree(*P))
+    {
+        if (info(*P) == X)
+        {
+            info(*P) = Y;
+        }
+        else
+        {
+            UpdateX(&left(*P), X, Y);
+            UpdateX(&right(*P), X, Y);
+        }
+    }
+}
 
 /*********** SOAL TAMBAHAN, DIKERJAKAN BILA LUANG *****************/
 
@@ -177,5 +331,3 @@ void PrintConsonant(bintree P);
 /*function Modus(P:bintree) -> character */
 /*{ mengembalikan huruf yang paling banyak muncul dalam bintree L}*/
 char Modus(bintree P);
-
-#endif

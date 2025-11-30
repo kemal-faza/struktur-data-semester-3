@@ -1,7 +1,7 @@
 /* File : pohon1.c */
 /* Deskripsi : ADT bintree berkait dengan representasi fisik pointer */
-/* NIM & Nama : */
-/* Tanggal : */
+/* NIM & Nama : 24060124120013 & Muhamad Kemal Faza */
+/* Tanggal : 27-11-2025 */
 
 #include "pohon1.h"
 
@@ -145,7 +145,7 @@ void PrintPrefix(bintree P)
     // algoritma
     if (P == NIL)
     {
-        printf("()");
+        printf("( )");
     }
     else
     {
@@ -217,7 +217,20 @@ int max2(int a, int b)
 
 /* function Tinggi(P:BinTree)-> integer
 {menghitung tinggi pohon P, tinggi pohon 1 elemen yaitu 0 }*/
-int Tinggi(bintree P);
+int Tinggi(bintree P)
+{
+    // kamus lokal
+
+    // algoritma
+    if (IsEmptyTree(P))
+    {
+        return -1;
+    }
+    else
+    {
+        return 1 + max2(Tinggi(GetLeft(P)), Tinggi(GetRight(P)));
+    }
+}
 
 /*** PENCARIAN ***/
 /*function SearchX(P:BinTree, X:infotype) -> boolean
@@ -273,61 +286,318 @@ void UpdateX(bintree *P, infotype X, infotype Y)
 
 /*function CountX(P:BinTree, X:infotype) -> integer
 { Mengirimkan banyaknya node dari P yang bernilai X }*/
-int CountX(bintree P, infotype X);
+int CountX(bintree P, infotype X)
+{
+    // kamus lokal
+
+    // algoritma
+    if (IsEmptyTree(P))
+    {
+        return 0;
+    }
+    else if (info(P) == X)
+    {
+        return 1 + CountX(GetLeft(P), X) + CountX(GetRight(P), X);
+    }
+    else
+    {
+        return CountX(GetLeft(P), X) + CountX(GetRight(P), X);
+    }
+}
 
 /*function IsSkewLeft (P : BinTree)-> boolean
 { Mengirim true jika P adalah pohon condong kiri } */
-boolean IsSkewLeft(bintree P);
+boolean IsSkewLeft(bintree P)
+{
+    // kamus lokal
+
+    // algoritma
+    if (IsDaun(P))
+    {
+        return true;
+    }
+    else
+    {
+        return IsUnerLeft(P) && IsSkewLeft(GetLeft(P));
+    }
+}
 
 /*function IsSkewRight (P : BinTree) -> boolean
 { Mengirim true jika P adalah pohon condong kanan }*/
-boolean IsSkewRight(bintree P);
+boolean IsSkewRight(bintree P)
+{
+    // kamus lokal
+
+    // algoritma
+    if (IsDaun(P))
+    {
+        return true;
+    }
+    else
+    {
+        return IsUnerRight(P) && IsSkewRight(GetRight(P));
+    }
+}
 
 /* procedure PrintPrefixRingkas(input P:bintree)
 {I.S. L terdefinisi; F.S. :-}
 { menampilkan info semua elemen bintree P secara prefix linier ringkas} */
 /*contoh: A(B(( ),D),C)*/
-void PrintPrefixRingkas(bintree P);
+void PrintPrefixRingkas(bintree P)
+{
+    // kamus lokal
+
+    // algoritma
+    if (P == NIL)
+    {
+        printf("( )");
+    }
+    else
+    {
+        if (IsDaun(P))
+        {
+            printf("%c", info(P));
+        }
+        else
+        {
+            printf("%c(", info(P));
+            PrintPrefixRingkas(GetLeft(P));
+            printf(",");
+            PrintPrefixRingkas(GetRight(P));
+            printf(")");
+        }
+    }
+}
 
 /*function LevelX(P:BinTree, X:infotype)-> integer
 { Mengirimkan level dari node X yang merupakan salah satu simpul dari pohon biner P. Akar(P) level-nya adalah 1. Pohon P tidak kosong. }*/
-int LevelX(bintree P, infotype X);
+int LevelX(bintree P, infotype X)
+{
+    // kamus lokal
+
+    // algoritma
+    if (IsEmptyTree(P))
+    {
+        return 0;
+    }
+    else if (info(P) == X)
+    {
+        return 1;
+    }
+    else
+    {
+        return 1 + max2(LevelX(GetLeft(P), X), LevelX(GetRight(P), X));
+    }
+}
 
 /*function CountLevel(P:BinTree, T:integer)-> integer
 { menghitung banyaknya node pada tingkat T. }*/
-int CountLevel(bintree P, int T);
+int CountLevel(bintree P, int T)
+{
+    // kamus lokal
+
+    // algoritma
+    if (IsEmptyTree(P) || T < 1)
+    {
+        return 0;
+    }
+    else if (T == 1)
+    {
+        return 1;
+    }
+    else
+    {
+        return CountLevel(GetLeft(P), T - 1) + CountLevel(GetRight(P), T - 1);
+    }
+}
 
 /*procedure PrintLevel( input P:bintree, input N: integer )
 {I.S. L terdefinisi; F.S. :-}
 { menampilkan info semua elemen bintree P pada generasi/level N}*/
-void PrintLevel(bintree P, int N);
+void PrintLevel(bintree P, int N)
+{
+    // kamus lokal
+
+    // algoritma
+    if (!IsEmptyTree(P) || N >= 1)
+    {
+        if (N == 1)
+        {
+            printf("%c, ", info(P));
+        }
+        else
+        {
+            PrintLevel(GetLeft(P), N - 1);
+            PrintLevel(GetRight(P), N - 1);
+        }
+    }
+}
 
 /*function GetDaunTerkiri(bintree P)-> infotype
 {mengembalikan nilai info daun terkiri, bila tidak ada, hasilnya '#' }*/
-infotype GetDaunTerkiri(bintree P);
+infotype GetDaunTerkiri(bintree P)
+{
+    // kamus lokal
+
+    // algoritma
+    if (IsEmptyTree(P))
+    {
+        return '#';
+    }
+    else if (IsDaun(P))
+    {
+        return info(P);
+    }
+    else
+    {
+        if (IsUnerRight(P))
+        {
+            return GetDaunTerkiri(GetRight(P));
+        }
+        else
+        {
+            return GetDaunTerkiri(GetLeft(P));
+        }
+    }
+}
 
 /*function FrekuensiX(P:bintree, X:infotype) -> real */
 /*{ mengembalikan rasio kemunculan X dibandingkan ukuran bintree P }*/
-float FrekuensiX(bintree P, infotype X);
+float FrekuensiX(bintree P, infotype X)
+{
+    // kamus lokal
+
+    // algoritma
+    if (IsEmptyTree(P))
+    {
+        return 0.0;
+    }
+    else
+    {
+        return (float)CountX(P, X) / NbElm(P);
+    }
+}
 
 /*function CountVocal(P:bintree) -> integer */
 /*{ mengembalikan banyaknya kemunculan huruf vokal dalam bintree P}*/
-int CountVocal(bintree P);
+int CountVocal(bintree P)
+{
+    // kamus lokal
+
+    // algoritma
+    if (IsEmptyTree(P))
+    {
+        return 0;
+    }
+    else if (info(P) == 'A' || info(P) == 'E' || info(P) == 'I' || info(P) == 'O' || info(P) == 'U' || info(P) == 'a' || info(P) == 'e' || info(P) == 'i' || info(P) == 'o' || info(P) == 'u')
+    {
+        printf("%c, ", info(P));
+        return 1 + CountVocal(GetLeft(P)) + CountVocal(GetRight(P));
+    }
+    else
+    {
+        return CountVocal(GetLeft(P)) + CountVocal(GetRight(P));
+    }
+}
 
 /*procedure PrintVocal( input P:bintree) */
 /*{ I.S.: P terdefinisi; F.S.: -
 Proses: menampilkan semua huruf vokal dalam bintree P}*/
-void PrintVocal(bintree P);
+void PrintVocal(bintree P)
+{
+    // kamus lokal
+
+    // algoritma
+    if (!IsEmptyTree(P))
+    {
+        if (info(P) == 'A' || info(P) == 'E' || info(P) == 'I' || info(P) == 'O' || info(P) == 'U' || info(P) == 'a' || info(P) == 'e' || info(P) == 'i' || info(P) == 'o' || info(P) == 'u')
+        {
+            printf("%c, ", info(P));
+            PrintVocal(GetLeft(P));
+            PrintVocal(GetRight(P));
+        }
+        else
+        {
+            PrintVocal(GetLeft(P));
+            PrintVocal(GetRight(P));
+        }
+    }
+}
 
 /*function CountConsonant(P:bintree) -> integer */
 /*{ mengembalikan banyaknya kemunculan huruf konsonan dalam bintree L}*/
-int CountConsonant(bintree P);
+int CountConsonant(bintree P)
+{
+    // kamus lokal
+
+    // algoritma
+    if (IsEmptyTree(P))
+    {
+        return 0;
+    }
+    else if (info(P) != 'A' && info(P) != 'E' && info(P) != 'I' && info(P) != 'O' && info(P) != 'U' && info(P) != 'a' && info(P) != 'e' && info(P) != 'i' && info(P) != 'o' && info(P) != 'u')
+    {
+        return 1 + CountConsonant(GetLeft(P)) + CountConsonant(GetRight(P));
+    }
+    else
+    {
+        return CountConsonant(GetLeft(P)) + CountConsonant(GetRight(P));
+    }
+}
 
 /*procedure PrintConsonant( input P:bintree) */
 /*{ I.S.: P terdefinisi; F.S.: -
 Proses: menampilkan semua huruf konsonan dalam bintree P}*/
-void PrintConsonant(bintree P);
+void PrintConsonant(bintree P)
+{
+    // kamus lokal
+
+    // algoritma
+    if (!IsEmptyTree(P))
+    {
+        if (info(P) != 'A' && info(P) != 'E' && info(P) != 'I' && info(P) != 'O' && info(P) != 'U' && info(P) != 'a' && info(P) != 'e' && info(P) != 'i' && info(P) != 'o' && info(P) != 'u')
+        {
+            printf("%c, ", info(P));
+            PrintConsonant(GetLeft(P));
+            PrintConsonant(GetRight(P));
+        }
+        else
+        {
+            PrintConsonant(GetLeft(P));
+            PrintConsonant(GetRight(P));
+        }
+    }
+}
 
 /*function Modus(P:bintree) -> character */
 /*{ mengembalikan huruf yang paling banyak muncul dalam bintree L}*/
-char Modus(bintree P);
+char Modus(bintree P)
+{
+    // kamus lokal
+    infotype temp;
+    int count;
+    char modus;
+
+    // algoritma
+    if (!IsEmptyTree(P))
+    { // kasus pohon tidak kosong
+        temp = GetAkar(P);
+        count = CountX(P, temp);
+        modus = temp;
+        if (CountX(P, Modus(GetLeft(P))) > count)
+        { // jika modus di sebelah kiri lebih besar
+            modus = Modus(GetLeft(P));
+            count = CountX(P, modus);
+        }
+        else if (CountX(P, Modus(GetRight(P))) > count)
+        { // jika modus di sebelah kanan lebih besar
+            modus = Modus(GetRight(P));
+            count = CountX(P, modus);
+        }
+    }
+    else
+    {                // kasus pohon kosong
+        modus = '#'; // Return a default value if the tree is empty
+    }
+    return modus;
+}
