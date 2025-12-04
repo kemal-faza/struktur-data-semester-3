@@ -1,5 +1,5 @@
-/* File : pohon1.c */
-/* Deskripsi : ADT bintree berkait dengan representasi fisik pointer */
+/* File : main.c */
+/* Deskripsi : aplikasi driver ADT bintree berkait, representasi fisik pointer */
 /* NIM & Nama : 24060124120013 & Muhamad Kemal Faza */
 /* Tanggal : 27-11-2025 */
 
