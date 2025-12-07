@@ -47,7 +47,7 @@ void InsertX(bintree *P, infotype X);
 { I.S. P tidak kosong }
 { F.S. P dihapus daun terkirinya, dan didealokasi, dengan X adalah info yang
 semula disimpan pada daun terkiri yang dihapus }*/
-void DelDaunTerkiri(bintree *P, infotype X);
+void DelDaunTerkiri(bintree *P, infotype *X);
 
 /*procedure DelDaun (input/output P : BinTree, input X : infotype)
 { I.S. P tidak kosong, X adalah salah satu daun }

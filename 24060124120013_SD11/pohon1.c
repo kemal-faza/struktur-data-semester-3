@@ -37,9 +37,9 @@ void DealokasiTree(bintree *P)
     // algoritma
     if (P != NIL)
     {
-        free(P);
+        free(*P);
     }
-    P = NIL;
+    *P = NIL;
 }
 
 /********** PEMBUATAN bintree KOSONG ***********/
