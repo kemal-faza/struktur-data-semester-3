@@ -130,8 +130,7 @@ void InsertVFirst(List1 *L, infotype V)
 void InsertVLast(List1 *L, infotype V)
 {
 	// kamus lokal
-	address P;
-	address Q;
+	address P, Q;
 
 	// algoritma
 	P = Alokasi(V);

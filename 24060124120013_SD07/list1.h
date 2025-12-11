@@ -165,4 +165,9 @@ void SplitList(List1 L, List1 *L1, List1 *L2);
  F.S.: L2 menjadi salinan L1}*/
 void CopyList(List1 L1, List1 *L2);
 
+/*procedure AddPemilih (input/output L:ListPemilih, input P:Pemilih) {I.S.: L mungkin kosong}
+{F.S.: L tetap, atau bertambah satu Pemilih }
+{Proses: menambah elemen P ke L, selama P belum ada di L}*/
+void AddIfNotExist(List1 *L, infotype P);
+
 #endif
