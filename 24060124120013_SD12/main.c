@@ -22,11 +22,6 @@ int main()
       B = Tree3(NIL, 'B', false, NIL, D);
       C = Tree3(NIL, 'C', false, E, F);
       W = Tree3(NIL, 'A', false, B, C);
-      parent(D) = B;
-      parent(E) = C;
-      parent(F) = C;
-      parent(B) = W;
-      parent(C) = W;
 
       // B = Tree3(NIL, 'B', false, NIL, D);
       // W = Tree3(NIL, 'A', false, B, NIL);
@@ -44,39 +39,39 @@ int main()
       CreateList(&tambahan);
       InsertVLast(&tambahan, 'D');
 
-      // printDFS(W);
+      printDFS(W);
 
-      // printf("Tinggi pohon: %d", Tinggi(W));
+      printf("Tinggi pohon: %d", Tinggi(W));
 
-      // PrintLevel(W, 3);
+      PrintLevel(W, 3);
 
-      // PrintBFS(W);
+      PrintBFS(W);
 
-      // printPathX(W, 'E');
+      printPathX(W, 'E');
 
-      // printPathDaunX(W, 'E');
+      printPathDaunX(W, 'E');
 
-      // printAllPaths(W);
+      printAllPaths(W);
 
-      // printf("Banyak elemen tree: %d", NbElmTree(W));
+      printf("\nBanyak elemen tree: %d", NbElmTree(W));
 
-      // printf("Banyak elemen daun tree: %d", NbDaun(W));
+      printf("\nBanyak elemen daun tree: %d", NbDaun(W));
 
-      // printf("Level tree: %d", Level(W));
+      printf("\nLevel tree: %d", Level(W));
 
-      // PrintList(L);
-      // Pconcat(&L, tambahan);
-      // PrintList(L);
+      PrintList(L);
+      Pconcat(&L, tambahan);
+      PrintList(L);
 
-      // PrintList(L);
-      // PrintList(Fconcat(L, tambahan));
+      PrintList(L);
+      PrintList(Fconcat(L, tambahan));
 
-      // PrintList(LinearPrefix(W));
-      // PrintList(LinearPosfix(W));
-      // PrintList(LinearInfix(W));
+      PrintList(LinearPrefix(W));
+      PrintList(LinearPosfix(W));
+      PrintList(LinearInfix(W));
 
-      // PrintList(LevelTree(W, 3));
-      // PrintList(LinearBreadthFS(W));
+      PrintList(LevelTree(W, 3));
+      PrintList(LinearBreadthFS(W));
 
       printf("\n");
 

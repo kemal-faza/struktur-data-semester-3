@@ -21,6 +21,13 @@ bintree3 Tree3(bintree3 A, infotype X, boolean V, bintree3 kiri, bintree3 kanan)
     visited(T) = V;
     left(T) = kiri;
     right(T) = kanan;
+
+    if (kiri != NIL)
+        parent(kiri) = T;
+
+    if (kanan != NIL)
+        parent(kanan) = T;
+
     return T;
 }
 
