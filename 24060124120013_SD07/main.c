@@ -35,7 +35,6 @@ int main()
   PrintList(Senarai);
 
   printf("\n");
-  
 
   return 0;
 }

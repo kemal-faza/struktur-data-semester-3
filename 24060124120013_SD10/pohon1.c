@@ -581,7 +581,7 @@ char Modus(bintree P)
     // algoritma
     if (!IsEmptyTree(P))
     { // kasus pohon tidak kosong
-        temp = GetAkar(P);
+        temp = info(P);
         count = CountX(P, temp);
         modus = temp;
         if (CountX(P, Modus(GetLeft(P))) > count)

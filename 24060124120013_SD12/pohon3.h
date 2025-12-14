@@ -7,7 +7,6 @@
 
 #include "list1.h" /* ambil dari hasil kerja praktikum 7 */
 
-#define NIL NULL
 #define info(P) (P)->info
 #define parent(P) (P)->parent
 #define visited(P) (P)->visited
@@ -145,6 +144,10 @@ List1 LinearPosfix(bintree3 P);
 /*function linearInfix(P:bintree3) -> List1
 {menghasilkan list node dari P terurut infix kiri,akar,kanan}*/
 List1 LinearInfix(bintree3 P);
+
+/*function LevelTree(P:bintree3) -> List1
+{menghasilkan list node dari P di level N}*/
+List1 LevelTree(bintree3 P, int N);
 
 /*function linearBreadthFS(P:bintree3) -> List1
 {menghasilkan list node dari P terurut level/tingkat}*/
