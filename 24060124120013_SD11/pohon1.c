@@ -35,11 +35,11 @@ void DealokasiTree(bintree *P)
     // kamus lokal
 
     // algoritma
-    if (P != NIL)
+    if (!IsEmptyTree(*P))
     {
         free(*P);
+        *P = NIL;
     }
-    *P = NIL;
 }
 
 /********** PEMBUATAN bintree KOSONG ***********/
@@ -374,6 +374,7 @@ void PrintPrefixRingkas(bintree P)
 int LevelX(bintree P, infotype X)
 {
     // kamus lokal
+    int leftLevel, rightLevel;
 
     // algoritma
     if (IsEmptyTree(P))
@@ -386,7 +387,19 @@ int LevelX(bintree P, infotype X)
     }
     else
     {
-        return 1 + max2(LevelX(GetLeft(P), X), LevelX(GetRight(P), X));
+        leftLevel = LevelX(GetLeft(P), X);
+        rightLevel = LevelX(GetRight(P), X);
+
+        if (leftLevel > 0)
+        {
+            return 1 + leftLevel;
+        }
+        else if (rightLevel > 0)
+        {
+            return 1 + rightLevel;
+        }
+
+        return 0;
     }
 }
 

@@ -133,7 +133,7 @@ void InsertX(bintree *P, infotype X)
     {
         if (!SearchX(*P, X))
         {
-            AddDaunTerkiri(&(*P), X);
+            AddDaunTerkiri(P, X);
         }
     }
 }
@@ -166,8 +166,14 @@ void DelDaunTerkiri(bintree *P, infotype *X)
         }
         else
         {
-            DelDaunTerkiri(&(left(*P)), X);
-            DelDaunTerkiri(&(right(*P)), X);
+            if (!IsEmptyTree(GetLeft(*P)))
+            {
+                DelDaunTerkiri(&(left(*P)), X);
+            }
+            else
+            {
+                DelDaunTerkiri(&(right(*P)), X);
+            }
         }
     }
 }
@@ -194,6 +200,13 @@ void DelDaun(bintree *P, infotype X)
 
             DealokasiTree(&T);
         }
+        else if (IsDaun(GetRight(*P)) && info(GetRight(*P)) == X)
+        {
+            T = right(*P);
+            right(*P) = NIL;
+
+            DealokasiTree(&T);
+        }
         else
         {
             DelDaun(&(left(*P)), X);
@@ -207,13 +220,22 @@ void DelDaun(bintree *P, infotype X)
 void DeleteX(bintree *P, infotype X)
 {
     // kamus lokal
+    infotype temp;
 
     // algoritma
     if (!IsEmptyTree(*P))
     {
         if (info(*P) == X)
         {
-            DealokasiTree(P);
+            if (IsDaun(*P))
+            {
+                DealokasiTree(P);
+            }
+            else
+            {
+                DelDaunTerkiri(P, &temp);
+                info(*P) = temp;
+            }
         }
         else
         {
